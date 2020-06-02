@@ -12,7 +12,6 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/kendo/js/kendo.all.min.js"></script>
-
  
 
  
@@ -26,7 +25,7 @@
             <div id="logo">
                 會議管理系統
             </div>
-            <ul id=menu>
+            <ul id="menu">
                 <li><a href="/homepage">首頁</a></li>
                 <li style="background-color: black;"><a href="/reservation">會議查詢/預約</a></li>
                 <li><a href="/checkin">會議簽到</a></li>
@@ -62,7 +61,7 @@
                         <option value = "4">四號會議室</option>
                     </select>
                 </div>                          
-                <div class="inputer" name="opendate" class="inparea" type="Date" >
+                <div class="inputer" name="opendate"  type="Date" >
                     <label for="opendate">開會日期：</label>
                     <input type="date" name="opendate" class="inparea" type="Date"id="opendate">
                 </div>
@@ -119,13 +118,78 @@
                 <div class="form-btn" id="form-btn">
                     <button class="btn btn-danger btn_botton" id="clean_btn">清除</button>
                     <button class="btn btn-primary btn_botton" id="insert_btn">新增</button>
-                    
-                </div>  <button class="btn  btn_botton" id="Member_btn">新增人員</button>
+                    <button class="btn btn-default btn_botton" id="insertmember_btn">新增人員</button>
+                </div>  
+                <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
+                <div class="uk-card  uk-text-left" id="objList_window" style="display:none">
+                <div id="record_grid"></div>       
+                </div>
+     <!--研究中    <div id="example" role="application">
+                    <div class="demo-section k-content">
+                        <select id="listbox1"></select>
+                        <select id="listbox2"></select>
+                        <div id="appendto"></div>
+                    </div>
+                    <span id="staticNotification"></span>
                 
+                    <div class="box wide">
+                        <div class="box-col">
+                            <h3>Working with selected items</h3>
+                            <div class="box-col">
+                                <ul class="options">
+                                    <li>
+                                        <h4>Transfer item</h4>
+                                        <button id="transfer-left" class="k-button">To left</button>
+                                        <button id="transfer-right" class="k-button">To right</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box-col">
+                                <ul class="options">
+                                    <li>
+                                        <h4>Move item</h4>
+                                        <button id="move-up" class="k-button">Move Up</button>
+                                        <button id="move-down" class="k-button">Move Down</button>
+                                    </li>
                 
-                       
-        </main>
-            <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
+                                </ul>
+                            </div>
+                            <div class="box-col">
+                                <ul class="options">
+                                    <li>
+                                        <h4>Enable/Disable item</h4>
+                                        <button id="disable" class="k-button">Disable</button>
+                                        <button id="enable" class="k-button">Enable</button>
+                                    </li>
+                
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box-col">
+                            <h3 class="clear">Add/Remove items</h3>
+                            <div class="box-col">
+                                <ul class="options">
+                                    <li>
+                                        <h4>Add item</h4>
+                                        <input type="text" id="add-textbox" class="k-textbox" name="name" value="New Product" />
+                                        <button id="add-item" class="k-button">Add</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="box-col">
+                                <ul class="options">
+                                    <li>
+                                        <h4>Remove by text (Contains)</h4>
+                                        <input type="text" id="remove-textbox" class="k-textbox" name="name" value="Chef" />
+                                        <button id="remove-item" class="k-button">Remove</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>        --->
+            </main>
+            
     </div>
 </body>
     <script>   
@@ -142,6 +206,145 @@
         $("#note").val("");
             });
         });
+/*志威叫我研究的
+        var notification = $("#staticNotification").kendoNotification({
+            autoHideAfter: 4000, appendTo: "#appendto",
+            animation: {
+                open: {
+                    effects: "fade:in"
+                },
+                close: {
+                    effects: "none"
+                }
+            }
+        }).data("kendoNotification");
+
+        var listbox1 = $("#listbox1").kendoListBox({
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            dataSource: {
+                type: "odata",
+                serverPaging: true,
+                transport: {
+                    read: {
+                        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                    }
+                },
+                pageSize: 10
+            },
+            connectWith: "listbox2",
+        }).data("kendoListBox");
+
+        var listbox2 = $("#listbox2").kendoListBox({
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            dataSource: []
+        }).data("kendoListBox");
+
+        function showMessage(message) {
+            notification.hide();
+            notification.error(message);
+        }
+
+        $("#transfer-left").click(function () {
+            if (listbox2.select().length > 0) {
+                listbox1.add(listbox2.dataItem(listbox2.select()));
+                listbox2.remove(listbox2.select());
+            }
+            else {
+                showMessage("Right ListBox should have selected item!");
+            }
+        })
+
+        $("#transfer-right").click(function () {
+            if (listbox1.select().length > 0) {
+                listbox2.add(listbox1.dataItem(listbox1.select()));
+                listbox1.remove(listbox1.select());
+            }
+            else {
+                showMessage("Left ListBox should have selected item!");
+            }
+        })
+
+        $("#enable").click(function () {
+            listbox1.enable(".k-item", true);
+            listbox2.enable(".k-item", true);
+        })
+
+        $("#disable").click(function () {
+            if (listbox1.select().length > 0 || listbox2.select().length > 0) {
+                listbox1.enable(listbox1.select(), false);
+                listbox2.enable(listbox2.select(), false);
+            }
+            else {
+                showMessage("You need to select an item to be disabled!");
+            }
+        })
+
+        $("#move-up").click(function () {
+            if (listbox1.select().length > 0) {
+                if (listbox1.select().first().index() > 0) {
+                    var item = listbox1.select().first();
+                    listbox1.reorder(item, item.index() - 1);
+                }
+                else {
+                    showMessage("Selected item is already at first position!");
+                }
+            }
+            else {
+                showMessage("Left ListBox should have selected item!");
+            }
+        })
+
+        $("#move-down").click(function () {
+            if (listbox1.select().length > 0) {
+                if (listbox1.select().first().index() < listbox1.items().length - 1) {
+                    var item = listbox1.select().first();
+                    listbox1.reorder(item, item.index() + 1);
+                }
+                else {
+                    showMessage("Selected item is already at last position!");
+                }
+            }
+            else {
+                showMessage("Left ListBox should have selected item!");
+            }
+        })
+
+        var Product = kendo.data.Model.define({
+            id: "ProductID",
+            fields: {
+                "ProductName": {
+                    type: "string"
+                }
+            }
+        });
+
+        $("#add-item").click(function () {
+            var text = $("#add-textbox").val();
+            var item = listbox1.add(new Product({
+                ProductName: text
+            }));
+        })
+
+        $("#remove-item").click(function () {
+            var text = $("#remove-textbox").val().toLowerCase();
+            var items = listbox1.items();
+            for (var i = 0; i < items.length; i++) {
+                var dataItem = listbox1.dataItem(items[i]);
+                if (dataItem.ProductName.toLowerCase().indexOf(text) >= 0) {
+                    listbox1.remove(items[i]);
+                }
+            }
+        });
+        */
+
+
+
+
+
+
+
 
 //新增人員 沒反應
         var gridCount = 0;
