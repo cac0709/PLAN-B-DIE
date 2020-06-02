@@ -136,6 +136,14 @@ width: 100px;
       float: right;
       width: 172px;
   }
+  #form-btn{
+      float: right;
+      margin-right: 10px;
+  }
+  .btn_botton{
+      float: right;
+      margin: 3px;
+  }
   .demo-section label {
     margin-bottom: 5px;
     font-weight: bold;
