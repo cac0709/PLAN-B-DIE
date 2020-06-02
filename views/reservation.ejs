@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">
     <link rel="stylesheet" href="/kendo/css/kendo.material.min.css">
-    <script src="/jquery/jquery-2.1.4.min.js"></script>
+    
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/kendo/js/kendo.all.min.js"></script>
-<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+
  
 
  
@@ -118,13 +119,13 @@
                 <div class="form-btn" id="form-btn">
                     <button class="btn btn-danger btn_botton" id="clean_btn">清除</button>
                     <button class="btn btn-primary btn_botton" id="insert_btn">新增</button>
-                    <button class="btn btn-default btn_botton" id="insertmember_btn">新增人員</button>
-                </div>  
-                <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
-                <div class="uk-card  uk-text-left" id="objList_window" style="display:none">
-                <div id="record_grid"></div>       
+                    
+                </div>  <button class="btn  btn_botton" id="Member_btn">新增人員</button>
+                
+                
+                       
         </main>
-            
+            <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
     </div>
 </body>
     <script>   
@@ -142,47 +143,39 @@
             });
         });
 
-
-
-
-
-
-
-
-
 //新增人員 沒反應
- /*
-     $("#insertmember_btn").click(function(){ 
+        var gridCount = 0;
+     $("#Member_btn").click(function(){
+         console.log("work"); 
         if (gridCount != 0) {
         $("#data_grid").data('kendoGrid').destroy();
         }
         $("#title_bar").show();
         gridCount++;
-        var params = {
+        /*var params = {
                 "USERNAME" :USERNAME,
                 "NAME" : NAME,
                 "MEMBERDEPARTMENT" : MEMBERDEPARTMENT,
                 "SIGN" : SIGN
               
         };
-
+*/
        $("#data_grid").kendoGrid({
                   dataSource:{
                         transport: {
                             read: {
                                 method: "post",
-                                url: "/membersearchforinsert",
-                                dataType: "json",
-                                data: params
+                                url: "/memberinsertforsearch",
+                                dataType: "json"
                             }
                         },
                         schema: {
                             model: {
                                 fields: {
-                                    USERNAME: { type: "text" },
-                                    NAME: { type: "text" },
-                                    MEMBERDEPARTMENT: { type: "text" },
-                                    SIGN: { type: "text" },
+                                    USERNAME: { type: "string" },
+                                    NAME: { type: "string" },
+                                    MEMBERDEPARTMENT: { type: "string" },
+                                    SIGN: { type: "string" },
                                 }
                             }
                         },
@@ -204,8 +197,7 @@
                                     numeric: false
                                 },
      });
-    })
-    */
+    });
 
          $("#insert_btn").click(function(){
          var params = {
@@ -220,7 +212,6 @@
 
         };
     $.ajax({
-    
     type:"post",
     url:"/insert",
     dataType:"json",
@@ -230,8 +221,7 @@
         alert("新增成功");
     }
 })
-}
-    
+} 
 );
 
     </script>

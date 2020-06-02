@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/uploads')));
-app.use(express.static(path.join(__dirname, '/kendo')));
+app.use(express.static(path.join(__dirname, 'kendo')));
 app.use(express.static(path.join(__dirname, '/public/stylesheets')));
 app.use(express.static(path.join(__dirname, 'jquery')));
 app.use(morgan('dev'));

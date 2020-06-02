@@ -66,7 +66,7 @@ res.render('checkin', {
    user:req.user
   });
  });
- /*
+ 
 app.post('/memberinsertforsearch',function(req,res){
   var con = mysql.createConnection({
     host: "localhost",
@@ -86,7 +86,7 @@ app.post('/memberinsertforsearch',function(req,res){
     }
   })
 });
-*///想做做不出來
+//想做做不出來
 
 
  app.post('/checkin', function(req, res) {
