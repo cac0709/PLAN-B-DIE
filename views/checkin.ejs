@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"-->
+    <title>首頁</title>
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">
+    <link rel="stylesheet" href="/kendo/css/kendo.material.min.css">
+    <script src="/jquery/jquery-2.1.4.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/kendo/js/kendo.all.min.js"></script>
+<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+  
+</head>
+<body>
+        <img src="https://1.bp.blogspot.com/-5LGvxa85lK4/XeZzyMnlLaI/AAAAAAAARtM/IJTYFA6b35QWYmQHhta9u1cTPFiAGqI8gCLcBGAsYHQ/s1600/homeTitlePicture.jpg" >
+    <div id="container">
+        <nav>
+            <div id="logo">
+                會議管理系統                
+            </div>
+            <ul id=menu>
+                <li><a href="/homepage">首頁</a></li>
+                <li><a href="/reservation">會議查詢/預約</a></li>
+                <li><a href="/checkin">會議簽到</a></li>
+                <li><a href="/record">會議記錄</a></li>
+                <li><a href="/edit">編輯會議/參加人員</a></li>
+                <li><a href="/membertest">excel測試</a></li>
+            </ul>
+        </nav>   
+        <header>
+            <div id="links">
+                <a href="/logout">登出</a>
+            </div>
+            <div id="user-name">
+                <h3>使用者:<%= user.username %></h3>
+            </div>
+        </header> 
+        <main>
+                <div id = "searchfun">
+                    <div class="main_fbtn" id="selectByEq_fbtn">
+                            <h5 class="main_func_text">使用資料搜尋</h5>
+    
+                    </div>
+                    <div class ="hide_selecter" id="selectBydata"></div>
+                <div class="inputer" name="searchroomid" >
+                    會議室編號：<select name="searchroomid" class="inparea"type="text" id = "searchroom_id">
+                            <option value ="1" >一號會議室</option>
+                            <option value = "2">二號會議室</option>
+                            <option value = "3">三號會議室</option>
+                            <option value = "4">四號會議室</option>
+                    </select>
+                <div class="inputer"  name="searchstarttime" >
+                    開始時間：<select name="searchstarttime" class="inparea"type="text"id ="starttime_id">
+                            <option value ="7:00">7:00</option>
+                            <option value ="8:00">8:00</option>
+                            <option value ="9:00">9:00</option>
+                            <option value ="10:00">10:00</option>
+                            <option value ="11:00">11:00</option>
+                            <option value ="12:00">12:00</option>
+                            <option value ="13:00">13:00</option>
+                            <option value ="14:00">14:00</option>
+                            <option value ="15:00">15:00</option>
+                            <option value ="16:00">16:00</option>
+                            <option value ="17:00">17:00</option>
+                    </select>
+                </div>
+                <div class="inputer"name="searchendtime" >
+                    結束時間：<select name="searchendtime" class="inparea"type="text"id = "endtime_id">
+                            <option value ="8:00">8:00</option>
+                            <option value ="9:00">9:00</option>
+                            <option value ="10:00">10:00</option>
+                            <option value ="11:00">11:00</option>
+                            <option value ="12:00">12:00</option>
+                            <option value ="13:00">13:00</option>
+                            <option value ="14:00">14:00</option>
+                            <option value ="15:00">15:00</option>
+                            <option value ="16:00">16:00</option>
+                            <option value ="17:00">17:00</option>
+                            <option value ="18:00">18:00</option>
+                    </select>
+            </div>
+              
+                <div class="inputer" name="searchopendate">
+                    開會日期：<input type="date" name="searchopendate" class=" form-control" type="Date" id = "date_id">
+             </div>
+             <div class="inputer" name="searchdepartment" >
+                開會單位：<select name="searchdepartment" class="inparea"type="text"id = "department_id">
+                        <option value ="婦產科">婦產科</option>
+                        <option value ="精神科">精神科</option>
+                        <option value ="泌尿科">泌尿科</option>
+                        <option value ="科科">科科</option>
+                </select>
+        </div>               
+        <div class="inputer"  name="searchtopic">
+            會議名稱：<input name="searchtopic" class="inparea"type="text"id = "meetname_id">
+         </div>
+            </table>
+            <div class="form-btn">
+                <button class="btn btn-danger" id="clean_btn">清除</button>
+                <button type="submit" value="submit" class="btn btn-primary" id = "search">搜尋</button>
+                </div>
+                <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
+                <div class="uk-card  uk-text-left" id="objList_window" style="display:none">
+                <div id="record_grid"></div>
+                
+            
+                </main> 
+            </div>
+        </div>
+    </div> 
+    
+    
+    
+    </body>
+    <script>
+        $(document).ready(function(){
+        $("#title_bar").hide();   
+        $(".hide_selecter").hide();
+                $("#searchroom_id").val("");
+                $("#starttime_id").val("");
+                $("#endtime_id").val("");
+                $("#date_id").val("");
+                $("#department_id").val("");
+                $("#meetname_id").val("");
+
+          
+          $("#search").click(function(){
+            $("#searchfun").toggle(200);
+            $(".hide_selecter").toggle(200);
+          });
+          $("#starttime_id").kendoMaskedTextBox(); 
+        
+        $("#endtime_id").kendoMaskedTextBox(); 
+    
+          $("#clean_btn").click(function(){
+            $("#searchroom_id").val("");
+                $("#starttime_id").val("");
+                $("#endtime_id").val("");
+                $("#date_id").val("");
+                $("#department_id").val("");
+                $("#meetname_id").val("");
+      })
+    });
+    
+    $("#objList_window").kendoWindow({
+            title: "參加人員",
+            width: "50%",
+            visible: false,
+            modal: true,
+            action: ["Close"]
+        });
+
+        
+        var gridCount = 0;
+        $("#search").click(function(){
+        
+                if (gridCount != 0) {
+                 $("#data_grid").data('kendoGrid').destroy();
+                }
+                $("#searchfun").toggle(200);
+                $("#title_bar").show();
+                gridCount++;
+                var params = {
+                        "ROOMID" : $("#searchroom_id").val(),
+                        "STARTTIME" : $("#starttime_id").val(),
+                        "ENDTIME" : $("#endtime_id").val(),
+                        "OPENDATE" : $("#date_id").val(),
+                        "DEPARTMENT" : $("#department_id").val(),
+                        "MEETINGNAME" : $("#meetname_id").val(),
+                };
+        
+        
+                $("#data_grid").kendoGrid({
+                  dataSource:{
+                        transport: {
+                            read: {
+                                method: "post",
+                                url: "/checkin",
+                                dataType: "json",
+                                data: params
+                            }
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    ROOMID: { type: "INT" },
+                                    STARTTIME: { type: "text" },
+                                    ENDTIME: { type: "text" },
+                                    OPENDATE: { type: "date" },
+                                    DEPARTMENT: { type: "text" },
+                                    MEETINGNAME: { type: "text" },
+                                }
+                            }
+                        },
+                        pageSize: 20,
+                    },
+                  height:600,
+                  columns:[
+                          {field:"ROOMID",title:"使用會議室",width:"8%"},
+                          {field:"STARTTIME",title:"開始時間",width:"10%"},
+                          {field:"ENDTIME",title:"結束時間",width:"10%"},
+                          {field:"OPENDATE",title:"日期",width:"10%"},
+                          {field:"DEPARTMENT",title:"部門",width:"10%"},
+                          {field:"MEETINGNAME",title:"主題",width:"10%"},
+                          { command: { text: "參加人員",click:memberlist}, title: " ", width: "10%" }
+                         
+                  ],
+                  sortable:true,
+                  scrollable: true,
+                                sortable: true,
+                                pageable: {
+                                    input: true,
+                                    numeric: false
+                                },
+          });
+        });
+       
+        function memberlist(e){
+        e.preventDefault();
+        var loc = this.dataItem($(e.currentTarget).closest("tr"));
+        $("#record_grid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        method: "post",
+                        url: "/memberlist",
+                        dataType: "json",
+                        data: { "ROOMID": loc.ROOMID}
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            USERNAME: { type: "text" },
+                            NAME: { type: "text" },
+                            MEMBERDEPARTMENT: { type: "text" },
+                            SIGN: { type: "text" },
+
+                        }
+                    }
+                },
+                pageSize: 20,
+            },
+            height: 550,
+            sortable: true,
+            pageable: {
+                input: true,
+                numeric: false
+            },
+            columns: [
+                { field: "USERNAME", title: "帳號", width: "10%" },
+                { field: "NAME", title: "姓名", width: "20%" },
+                { field: "MEMBERDEPARTMENT", title: "部門", width: "20%" },
+                { field: "SIGN", title: "簽到狀況", width: "20%" },
+                { command: { text: "簽到",click:signfun}, title: "簽到", width: "10%" }
+               
+            ]
+        });
+        function signfun(e) {
+        e.preventDefault();
+        var loc = this.dataItem($(e.currentTarget).closest("tr"));
+        if (confirm("是否簽到") == true) {
+            $.ajax({
+                type: "POST",
+                url: "/signfun",
+                data: {"USERNAME": loc.USERNAME},
+                dataType: "json",
+            }).done(function (e) {
+                if (e == true) $("#record_grid").data("kendoGrid").dataSource.read();
+            })
+        } else 
+        return false;
+    } 
+        
+        
+        $('#objList_window').data("kendoWindow").center().open();
+}
+        </script>
+        </main> 
+       
+</body>
+</html>
