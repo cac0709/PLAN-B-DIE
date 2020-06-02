@@ -44,6 +44,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/uploads')));
 app.use(express.static(path.join(__dirname, '/kendo')));
 app.use(express.static(path.join(__dirname, '/public/stylesheets')));
+app.use(express.static(path.join(__dirname, 'jquery')));
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '1mb'}));  //body-parser 解析json格式数据
