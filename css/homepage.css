@@ -78,13 +78,13 @@ header{
     line-height: 40px;
 }
 header #links {
-    
     float: right;
-    height: 60px;
+    height: 40px;
     display: block;
     color: #f7f7f7;
-    font-size: 2em;
-    
+    font-size: 20px;
+    line-height: initial;
+    margin-top: 5px;
 }
 #links>a{
     text-decoration: none;
@@ -93,40 +93,28 @@ header #links {
     width: 100%;
     display: block;
     float: right;
-    border:0.5px blue solid;
-    color: blue;
+    color: white;
+    margin-right: 5px;
+    margin-top: 2px;
 }
 
-#user-name{
-    line-height: 50px;
-    
-    color: blue;
+#user-name>h3{
+    color: white;
     float:right;
-    font-size: 2em;
-}
-#user-name>p{
-    color: blue;
-    float:right;
-    height: 100%;
-    width: 100%;
+    font-size: 20px;
+    margin-bottom: 4px;
+    margin-right: 13px;
+    margin-top: 14px;
 }
 
-#links:hover{
-background-color: #1e90ff;
-}
 
 main{
-    top: 200px;
+    top: 160px;
     position: absolute;
-    left: 200px;
-   
+    left: 220px;
+   float: left;
 }
 
-.main_func_text{
-    color: #1322ec;
-   font-size: large;
-
-}
 
 main #table{
     height: 600px;
@@ -141,6 +129,12 @@ width: 100px;
 }
 .inputer{
     margin: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .inparea{
+      float: right;
+      width: 172px;
   }
   .demo-section label {
     margin-bottom: 5px;

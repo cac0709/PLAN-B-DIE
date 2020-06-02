@@ -27,7 +27,7 @@
             </div>
             <ul id=menu>
                 <li><a href="/homepage">首頁</a></li>
-                <li><a href="/reservation">會議查詢/預約</a></li>
+                <li style="background-color: black;"><a href="/reservation">會議查詢/預約</a></li>
                 <li><a href="/checkin">會議簽到</a></li>
                 <li><a href="/record">會議記錄</a></li>
                 <li><a href="/edit">編輯會議/參加人員</a></li>
@@ -44,72 +44,75 @@
         </header>
 
         <main>
-            <div class="main_func" id="selectByEq_fbtn">
-                <div class="main_func_text">預約會議室</div>
                 <div class="inputer" name="meetingname" type= "text" >
-                  會議名稱：<input name="meetingname" class="inparea"type="text"id="meetingname">
-               </div>
-               <div class="inputer" name="meetinroomcode" type= "text" >
-                會議編號：<input name="meetingroomcode" class="inparea"type="text"id="meetingroomcode">
-             </div>
-              
-                      <div class="inputer" name="room" type= "text" >
-                              會議室編號：<select name="meetingroom" class="inparea"type="int"id="meetingroom">
-                                      <option value ="1" >一號會議室</option>
-                                      <option value = "2">二號會議室</option>
-                                      <option value = "3">三號會議室</option>
-                                      <option value = "4">四號會議室</option>
-                              </select>
-                      </div>                          
-                      <div class="inputer" name="opendate" class="inparea" type="Date" >
-                             開會日期：<input type="date" name="opendate" class="inparea" type="Date"id="opendate">
-                      </div>
+                    <label for="meetingname">會議名稱：</label>
+                    <input name="meetingname" class="inparea"type="text"id="meetingname">
+                </div>
+                <div class="inputer" name="meetinroomcode" type= "text" >
+                    <label for="meetingroomcode">會議編號：</label>
+                    <input name="meetingroomcode" class="inparea"type="text"id="meetingroomcode">
+                </div>
+                <div class="inputer" name="room" type= "text" >
+                    <label for="meetingroom">會議室編號：</label>          
+                    <select name="meetingroom" class="inparea"type="int"id="meetingroom">
+                        <option value ="1" >一號會議室</option>
+                        <option value = "2">二號會議室</option>
+                        <option value = "3">三號會議室</option>
+                        <option value = "4">四號會議室</option>
+                    </select>
+                </div>                          
+                <div class="inputer" name="opendate" class="inparea" type="Date" >
+                    <label for="opendate">開會日期：</label>
+                    <input type="date" name="opendate" class="inparea" type="Date"id="opendate">
+                </div>
                       
-                              <div class="inputer" name="start" type="text">
-                              開始時間：<select name="StartTime" class="inparea" type="text"id="StartTime">
-                                      <option value ="7:00">7:00</option>
-                                      <option value ="8:00">8:00</option>
-                                      <option value ="9:00">9:00</option>
-                                      <option value ="10:00">10:00</option>
-                                      <option value ="11:00">11:00</option>
-                                      <option value ="12:00">12:00</option>
-                                      <option value ="13:00">13:00</option>
-                                      <option value ="14:00">14:00</option>
-                                      <option value ="15:00">15:00</option>
-                                      <option value ="16:00">16:00</option>
-                                      <option value ="17:00">17:00</option>
-                              </select>
-                              </div>        
-                              <div class="inputer"  name="end" type="text">
-                                      結束時間：<select name="endtime" class="inparea"type="text" id="endtime">
-                                              <option value ="8:00">8:00</option>
-                                              <option value ="9:00">9:00</option>
-                                              <option value ="10:00">10:00</option>
-                                              <option value ="11:00">11:00</option>
-                                              <option value ="12:00">12:00</option>
-                                              <option value ="13:00">13:00</option>
-                                              <option value ="14:00">14:00</option>
-                                              <option value ="15:00">15:00</option>
-                                              <option value ="16:00">16:00</option>
-                                              <option value ="17:00">17:00</option>
-                                              <option value ="18:00">18:00</option>
-                                      </select>
-                              </div>
-                                      <div class="inputer" name="unit" type="text">
-                                              開會單位：<select name="department" class="inparea"type="text"id="department">
+                <div class="inputer" name="start" type="text">
+                    <label for="StartTime">開始時間：</label>
+                    <select name="StartTime" class="inparea" type="text"id="StartTime">
+                        <option value ="7:00">7:00</option>
+                        <option value ="8:00">8:00</option>
+                        <option value ="9:00">9:00</option>
+                        <option value ="10:00">10:00</option>
+                        <option value ="11:00">11:00</option>
+                        <option value ="12:00">12:00</option>
+                        <option value ="13:00">13:00</option>
+                        <option value ="14:00">14:00</option>
+                        <option value ="15:00">15:00</option>
+                        <option value ="16:00">16:00</option>
+                        <option value ="17:00">17:00</option>
+                    </select>
+                </div>        
+                <div class="inputer"  name="end" type="text">
+                    <label for="endtime">結束時間：</label>
+                    <select name="endtime" class="inparea"type="text" id="endtime">
+                        <option value ="8:00">8:00</option>
+                        <option value ="9:00">9:00</option>
+                        <option value ="10:00">10:00</option>
+                        <option value ="11:00">11:00</option>
+                        <option value ="12:00">12:00</option>
+                        <option value ="13:00">13:00</option>
+                        <option value ="14:00">14:00</option>
+                        <option value ="15:00">15:00</option>
+                        <option value ="16:00">16:00</option>
+                        <option value ="17:00">17:00</option>
+                        <option value ="18:00">18:00</option>
+                    </select>
+                </div>
+                <div class="inputer" name="unit" type="text">
+                    <label for="department">開會單位：</label>
+                    <select name="department" class="inparea"type="text"id="department">
                                                       <option value ="婦產科">婦產科</option>
                                                       <option value ="精神科">精神科</option>
                                                       <option value ="泌尿科">泌尿科</option>
                                                       <option value ="科科">科科</option>
-                                              </select>
-                                      </div>   
-                                      <div class="inputer" name="meetingname" type= "text" >
-                                        <textarea style="width:300px;height:100px;"id = "note">
-                                            　輸入備註
-                                            </textarea>
-                                     </div>           
-                                      <div id="example" role="application">
-                                        <div class="demo-section k-content">
+                    </select>
+                </div>   
+                <div class="inputer" name="meetingname" type= "text" >
+                    <textarea style="width:300px;height:100px;"id = "note">輸入備註
+                    </textarea>
+                </div>           
+                <div id="example" role="application">
+                    <div class="demo-section k-content">
                                          
                 </div>
                 <div class="form-btn">
@@ -138,6 +141,15 @@
         $("#note").val("");
             });
         });
+
+
+
+
+
+
+
+
+
 //新增人員 沒反應
  /*
      $("#insertmember_btn").click(function(){ 
