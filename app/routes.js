@@ -86,7 +86,31 @@ app.post('/memberinsertforsearch',function(req,res){
     }
   })
 });
-//想做做不出來
+app.post('/addmember',function(req,res){
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "123456",
+    database: "nodejs_login",
+  });
+ var meetingroomcode = req.body['MEETINGROOMCODE'];
+ var username = req.body['USERNAME'];
+ var name = req.body['NAME'];
+ var memberdepartment = req.body['MEMBERDEPARTMENT'];
+ var sqlforaddmember = "Inset into participants (meetingroomcode,username,name,department)"+"value('"+meetingroomcode+"','"+username+"','"+name+"','"+memberdepartment+"')"
+ con.query(sqlforaddmember,function(err,rows){
+  console.log(rows);
+  if(err){
+    console.log(err);
+  }else{
+    res.json(rows);
+    //res.end();
+  }
+})
+
+
+})
+
 
 
  app.post('/checkin', function(req, res) {

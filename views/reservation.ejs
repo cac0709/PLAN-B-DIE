@@ -152,14 +152,9 @@
         }
         $("#title_bar").show();
         gridCount++;
-        /*var params = {
-                "USERNAME" :USERNAME,
-                "NAME" : NAME,
-                "MEMBERDEPARTMENT" : MEMBERDEPARTMENT,
-                "SIGN" : SIGN
-              
+        var params = {
+            "MEETINGROOMCODE" : $("#meetingroomcode").val(),
         };
-*/
        $("#data_grid").kendoGrid({
                   dataSource:{
                         transport: {
@@ -185,7 +180,7 @@
                           {field:"USERNAME",title:"員工編號",width:"8%"},
                           {field:"NAME",title:"員工姓名",width:"10%"},
                           {field:"MEMBERDEPARTMENT",title:"部門",width:"10%"},
-                   
+                          { command: { text: "新增人員",click:addmember}, title: "新增人員", width: "10%" }
                          
                   ],
                   sortable:true,
@@ -197,6 +192,22 @@
                                 },
      });
     });
+
+    function addmember(e) {
+        e.preventDefault();
+        var loc = this.dataItem($(e.currentTarget).closest("tr"));
+        if (confirm("確定新增") == true) {
+            $.ajax({
+                type: "POST",
+                url: "/addmember",
+                data: {"USERNAME": loc.USERNAME,"MEETINGROOMCODE":loc.MEETINGROOMCODE,"NAME":loc.NAME,"MEMBERDEPARTMENT":loc.MEMBERDEPARTMENT},
+                dataType: "json",
+            }).done(function (e) {
+                if (e == true) $("#data_grid").data("kendoGrid").dataSource.read();
+            })
+        } else 
+        return false;
+    } 
 
          $("#insert_btn").click(function(){
          var params = {
