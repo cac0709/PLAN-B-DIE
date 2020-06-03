@@ -196,11 +196,11 @@
     function addmember(e) {
         e.preventDefault();
         var loc = this.dataItem($(e.currentTarget).closest("tr"));
-        if (confirm("確定新增") == true) {
+        if (confirm("確定新增?") == true) {
             $.ajax({
                 type: "POST",
                 url: "/addmember",
-                data: {"USERNAME": loc.USERNAME,"MEETINGROOMCODE":loc.MEETINGROOMCODE,"NAME":loc.NAME,"MEMBERDEPARTMENT":loc.MEMBERDEPARTMENT},
+                data: {"USERNAME": loc.USERNAME,"MEETINGROOMCODE" : $("#meetingroomcode").val(),"NAME":loc.NAME,"MEMBERDEPARTMENT":loc.MEMBERDEPARTMENT},
                 dataType: "json",
             }).done(function (e) {
                 if (e == true) $("#data_grid").data("kendoGrid").dataSource.read();
