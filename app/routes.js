@@ -74,7 +74,7 @@ app.post('/memberinsertforsearch',function(req,res){
     password: "123456",
     database: "nodejs_login",
   });
-  var sql = "select username as USERNAME,name as NAME,department as MEMBERDEPARTMENT,sign as SIGN from users"
+  var sql = "select username as USERNAME,name as NAME,department as MEMBERDEPARTMENT from users"
 
   con.query(sql,function(err,rows){
     console.log(rows);
