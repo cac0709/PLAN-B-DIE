@@ -196,6 +196,7 @@
     function addmember(e) {
         e.preventDefault();
         var loc = this.dataItem($(e.currentTarget).closest("tr"));
+        console.log($("#meetingroomcode").val());
         if (confirm("確定新增?") == true) {
             $.ajax({
                 type: "POST",
