@@ -6,11 +6,11 @@
     <title>首頁</title>
     <link rel="stylesheet" href="/css/homepage.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">
-    <link rel="stylesheet" href="/kendo/css/kendo.material.min.css">
+   <!-- <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">-->
+    <!--<link rel="stylesheet" href="/kendo/css/kendo.material.min.css">-->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/kendo/js/kendo.all.min.js"></script>
+   <!--<script src="/kendo/js/kendo.all.min.js"></script>-->
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
     <script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
@@ -131,7 +131,10 @@
             <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 10%;margin-left: 45%;"></div>
     </div>
 </body>
-    <script>   
+    <script>
+         function onChange(arg) {
+                    kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+                }
     $(document).ready(function(){
         $("#clean_btn").click(function(){
         $("#department").val("");
@@ -145,7 +148,7 @@
         $("#note").val("");
             });
         });
-
+       
 //新增人員 沒反應
         var gridCount = 0;
      $("#Member_btn").click(function(){
@@ -169,10 +172,11 @@
                         },
                         schema: {
                             model: {
+                                id:"USERNAME",
+                                id:"NAME",
+                                id:"DEPARTMENT",
                                 fields: {
-                                    USERNAME: { type: "string" },
-                                    NAME: { type: "string" },
-                                    MEMBERDEPARTMENT: { type: "string" },
+                                 
                                 }
                             }
                         },
@@ -180,12 +184,18 @@
                     },
                   height:600,
                   toolbar: ["search"],
-                pageable: {
+                 pageable:{
                     refresh: true,
                     pageSizes: true,
-                    buttonCount: 5
+                    buttonCount: 5,
                 },
+                pageable: true,
+                        scrollable: false,
+                        persistSelection: true,
+                        sortable: true,
+                        change: onChange,
                   columns:[
+                          {selectable: true, width: "50px" },
                           {field:"USERNAME",title:"員工編號",width:"8%"},
                           {field:"NAME",title:"員工姓名",width:"10%"},
                           {field:"MEMBERDEPARTMENT",title:"部門",width:"10%"},
@@ -194,6 +204,7 @@
                   ],
                   sortable:true,
                   scrollable: true,
+                  persistSelection: true,
                                 sortable: true,
                                 pageable: {
                                     input: true,
@@ -214,6 +225,7 @@
                 dataType: "json",
             }).done(function (e) {
                 if (e == true) $("#data_grid").data("kendoGrid").dataSource.read();
+                alert("新增成功");
             })
         } else 
         return false;
@@ -231,16 +243,7 @@
             "NOTE" : $("#note").val(),
 
         };
-    $.ajax({
-    type:"post",
-    url:"/insert",
-    dataType:"json",
-    data: params
-    }).done(function(e){
-    if(e == true){
-        alert("新增成功");
-    }
-})
+ 
 } 
 );
 
