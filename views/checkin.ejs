@@ -7,12 +7,14 @@
     <title>首頁</title>
     <link rel="stylesheet" href="/css/homepage.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">
-    <link rel="stylesheet" href="/kendo/css/kendo.material.min.css">
-    <script src="/jquery/jquery-2.1.4.min.js"></script>
+   <!-- <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">-->
+    <!--<link rel="stylesheet" href="/kendo/css/kendo.material.min.css">-->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-    <script src="/kendo/js/kendo.all.min.js"></script>
-<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <!--<script src="/kendo/js/kendo.all.min.js"></script>-->
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
   
 </head>
 <body>
@@ -24,11 +26,11 @@
             </div>
             <ul id=menu>
                 <li><a href="/homepage">首頁</a></li>
-                <li><a href="/reservation">會議查詢/預約</a></li>
-                <li><a href="/checkin">會議簽到</a></li>
+                <li><a href="/reservation">會議預約</a></li>
+                <li><a href="/checkin">會議/參加人員查詢</a></li>
                 <li><a href="/record">會議記錄</a></li>
                 <li><a href="/edit">編輯會議/參加人員</a></li>
-                <li><a href="/membertest">excel測試</a></li>
+        
             </ul>
         </nav>   
         <header>
@@ -45,6 +47,9 @@
                             <h5 class="main_func_text">使用資料搜尋</h5>
     
                     </div>
+                    <div class="inputer"  name="searchmeetingroomcode">
+                        會議代碼：<input name="searchmeetingroomcode" class="inparea"type="text"id = "meetingroomcode_id">
+                     </div>
                     <div class ="hide_selecter" id="selectBydata"></div>
                 <div class="inputer" name="searchroomid" >
                     會議室編號：<select name="searchroomid" class="inparea"type="text" id = "searchroom_id">
@@ -126,6 +131,7 @@
                 $("#date_id").val("");
                 $("#department_id").val("");
                 $("#meetname_id").val("");
+                $("#meetingroomcode_id").val("");
 
           
           $("#search").click(function(){
@@ -143,6 +149,8 @@
                 $("#date_id").val("");
                 $("#department_id").val("");
                 $("#meetname_id").val("");
+                $("#meetingroomcode_id").val("");
+
       })
     });
     
@@ -166,6 +174,7 @@
                 gridCount++;
                 var params = {
                         "ROOMID" : $("#searchroom_id").val(),
+                        "MEETINGROOMCODE":$("#meetingroomcode_id").val(),
                         "STARTTIME" : $("#starttime_id").val(),
                         "ENDTIME" : $("#endtime_id").val(),
                         "OPENDATE" : $("#date_id").val(),
@@ -193,6 +202,7 @@
                                     OPENDATE: { type: "date" },
                                     DEPARTMENT: { type: "text" },
                                     MEETINGNAME: { type: "text" },
+                                    MEETINGROOMCODE: { type: "text" },
                                 }
                             }
                         },
@@ -200,6 +210,7 @@
                     },
                   height:600,
                   columns:[
+                          {field:"MEETINGROOMCODE",title:"會議代碼",width:"8%"},
                           {field:"ROOMID",title:"使用會議室",width:"8%"},
                           {field:"STARTTIME",title:"開始時間",width:"10%"},
                           {field:"ENDTIME",title:"結束時間",width:"10%"},
@@ -229,7 +240,7 @@
                         method: "post",
                         url: "/memberlist",
                         dataType: "json",
-                        data: { "ROOMID": loc.ROOMID}
+                        data: {"MEETINGROOMCODE": $("#meetingroomcode_id").val()},
                     }
                 },
                 schema: {
@@ -237,7 +248,7 @@
                         fields: {
                             USERNAME: { type: "text" },
                             NAME: { type: "text" },
-                            MEMBERDEPARTMENT: { type: "text" },
+                            DEPARTMENT: { type: "text" },
                           
 
                         }
@@ -254,27 +265,12 @@
             columns: [
                 { field: "USERNAME", title: "帳號", width: "10%" },
                 { field: "NAME", title: "姓名", width: "20%" },
-                { field: "MEMBERDEPARTMENT", title: "部門", width: "20%" },
-                { field: "SIGN", title: "簽到狀況", width: "20%" },
-                { command: { text: "簽到",click:signfun}, title: "簽到", width: "10%" }
+                { field: "DEPARTMENT", title: "部門", width: "20%" },
+          
                
             ]
         });
-        function signfun(e) {
-        e.preventDefault();
-        var loc = this.dataItem($(e.currentTarget).closest("tr"));
-        if (confirm("是否簽到") == true) {
-            $.ajax({
-                type: "POST",
-                url: "/signfun",
-                data: {"USERNAME": loc.USERNAME},
-                dataType: "json",
-            }).done(function (e) {
-                if (e == true) $("#record_grid").data("kendoGrid").dataSource.read();
-            })
-        } else 
-        return false;
-    } 
+    
         
         
         $('#objList_window').data("kendoWindow").center().open();

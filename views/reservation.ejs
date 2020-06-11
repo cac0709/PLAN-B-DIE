@@ -31,10 +31,11 @@
             </div>
             <ul id=menu>
                 <li><a href="/homepage">首頁</a></li>
-                <li style="background-color: black;"><a href="/reservation">會議查詢/預約</a></li>
-                <li><a href="/checkin">會議簽到</a></li>
+                <li><a href="/reservation">會議預約</a></li>
+                <li><a href="/checkin">會議/參加人員查詢</a></li>
                 <li><a href="/record">會議記錄</a></li>
                 <li><a href="/edit">編輯會議/參加人員</a></li>
+        
             </ul>
         </nav>
         <header>
@@ -246,7 +247,16 @@
             "NOTE" : $("#note").val(),
 
         };
- 
+        $.ajax({	 
+    type:"post",	
+    url:"/insert",	
+    dataType:"json",	
+    data: params	
+    }).done(function(e){	
+    if(e == true){	
+        alert("新增成功");	
+    }	
+})
 } 
 );
 

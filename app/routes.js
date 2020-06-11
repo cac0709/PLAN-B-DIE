@@ -127,8 +127,8 @@ var searchend = req.body['ENDTIME'];
 var searchdate = req.body['OPENDATE'];
 var searchdepartment = req.body['DEPARTMENT'];
 var searchtopic = req.body['MEETINGNAME'];
-var searchmeetingroomcode = req.body['MEETCODE'];
-var sqlforsearch = 'select roomid as ROOMID,starttime as STARTTIME,endtime as ENDTIME,opendate as OPENDATE,department as DEPARTMENT,meetingroomcode as MEETCODE,meetingname as MEETINGNAME from reservation where (roomid="'+ searchroom +'" OR starttime="'+ searchstart +'"OR endtime="'+ searchend +'"OR opendate="'+ searchdate +'"OR department="'+ searchdepartment +'"OR meetingname="'+ searchtopic +'"OR meetingroomcode="'+searchmeetingroomcode+'")'
+var searchmeetingroomcode = req.body['MEETINGROOMCODE'];
+var sqlforsearch = 'select roomid as ROOMID,starttime as STARTTIME,endtime as ENDTIME,opendate as OPENDATE,department as DEPARTMENT,meetingroomcode as MEETINGROOMCODE,meetingname as MEETINGNAME from reservation where (roomid="'+ searchroom +'" OR starttime="'+ searchstart +'"OR endtime="'+ searchend +'"OR opendate="'+ searchdate +'"OR department="'+ searchdepartment +'"OR meetingname="'+ searchtopic +'"OR meetingroomcode="'+searchmeetingroomcode+'")'
 con.query(sqlforsearch, function(err, rows) {
      console.log('搜尋結果',rows);
     if(err){
@@ -141,13 +141,14 @@ con.query(sqlforsearch, function(err, rows) {
 });
 
 app.post('/memberlist',function(req,res,next){
+var meetingroomcode = req.body['MEETINGROOMCODE'];
   var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "123456",
     database: "nodejs_login",
   });
-  var sql = "select username as USERNAME,name as NAME,department as MEMBERDEPARTMENT,sign as SIGN from users"
+  var sql = "Select username as USERNAME,name as NAME,department as DEPARTMENT from participants where meetingroomcode = '"+meetingroomcode+"';"
 
   con.query(sql,function(err,rows){
     console.log(rows);
