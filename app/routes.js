@@ -228,6 +228,35 @@ app.post('/signfun',function(req,res){
   })
 
 });
+app.get('/checksign', isLoggedIn, function(req, res){
+  res.render('checksign', {
+   user:req.user
+  });
+ });
+ 
+ app.post('/checksignfun', function(req, res){
+  var username = req.body["USERNAME"];
+  var sqlchecksign = "select meetingroomcode as MEETINGROOMCODE, name as NAME ,username as USERNAME ,department as DEPARTMENT ,sign as SIGN  from participants where USERNAME =  '"+username+"';"
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "123456",
+    database: "nodejs_login",
+});
+  
+  
+  
+  
+  con.query(sqlchecksign,function(err,rows){
+    console.log(rows);
+    if(err){
+      console.log(err);
+    }else{
+      res.send(true);
+      //res.end();
+    }
+  })
+});
 
 
 

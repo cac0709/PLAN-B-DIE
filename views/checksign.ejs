@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- <link rel="stylesheet" href="/kendo/css/kendo.common-material.min.css">-->
+    <!--<link rel="stylesheet" href="/kendo/css/kendo.material.min.css">-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <!--<script src="/kendo/js/kendo.all.min.js"></script>-->
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
+  
+</head>
+
+<body>
+    <img
+        src="https://1.bp.blogspot.com/-5LGvxa85lK4/XeZzyMnlLaI/AAAAAAAARtM/IJTYFA6b35QWYmQHhta9u1cTPFiAGqI8gCLcBGAsYHQ/s1600/homeTitlePicture.jpg">
+    <div id="container">
+        <nav>
+            <div id="logo">
+                會議管理系統
+            </div>
+            <ul id=menu>
+                <li><a href="/homepage">首頁</a></li>
+                <li><a href="/reservation">會議查詢/預約</a></li>
+                <li><a href="/checkin">會議簽到</a></li>
+                <li><a href="/record">會議記錄</a></li>
+                <li><a href="/edit">編輯會議/參加人員</a></li>
+                <li><a href="/checksign">檢查簽到狀況</a></li>
+
+                
+            </ul>
+        </nav>
+        <header>
+
+            <div id="links">
+                <a href="/logout">登出</a>
+            </div>
+            <div id="user-name">
+                <h3>使用者:<%= user.username %></h3>
+            </div>
+        </header>
+
+        <main>
+            <div id = "searchfunforsign">
+                <div class="main_fbtn" id="selectByEq_fbtn">
+                        <h5 class="main_func_text">使用資料搜尋</h5>
+
+                </div>
+                <div class="inputer"  name="searchusername">
+                    員工帳號：<input name="searchusername" class="inparea"type="text"id = "searchusername_id">
+                 </div>
+                <div class ="hide_selecter" id="selectBydata"></div>
+       
+        <div class="form-btn">
+            <button class="btn btn-danger" id="clean_btn">清除</button>
+            <button type="submit" value="submit" class="btn btn-primary" id = "search">搜尋</button>
+            </div>
+            <div id="data_grid" class="col-12" style="margin: 4%;margin-top: 0%;"></div>
+            <div class="uk-card  uk-text-left" id="objList_window" style="display:none">
+            <div id="record_grid"></div>
+            
+        
+            </main> 
+        </div>
+    </div>
+</div> 
+
+
+
+</body>
+<script>
+    $(document).ready(function(){
+    $("#title_bar").hide();   
+    $(".hide_selecter").hide();
+  
+     
+      
+      $("#search").click(function(){
+        $("#searchfunforsign").toggle(200);
+        $(".hide_selecter").toggle(200);
+      });
+
+
+      $("#clean_btn").click(function(){
+        $("#searchusername_id").val("");
+           
+    
+  })
+});
+
+
+
+    
+    var gridCount = 0;
+    $("#search").click(function(){
+    
+            if (gridCount != 0) {
+             $("#data_grid").data('kendoGrid').destroy();
+            }
+            $("#searchfunforsign").toggle(200);
+            $("#title_bar").show();
+            gridCount++;
+            var params = {
+                    "USERNAME" : $("#searchusername_id").val(),
+                  
+            };
+    
+    
+            $("#data_grid").kendoGrid({
+              dataSource:{
+                    transport: {
+                        read: {
+                            method: "post",
+                            url: "/checksignfun",
+                            dataType: "json",
+                            data: params
+                        }
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                MEETINGROOMCODE: { type: "string" },
+                                USERNAME: { type: "string" },
+                                NAME: { type: "string" },
+                                DEPARTMENT: { type: "string" },
+                                SIGN: { type: "string" },
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+              height:600,
+              columns:[
+                      {field:"MEETINGROOMCODE",title:"會議代碼",width:"8%"},
+                      {field:"USERNAME",title:"員工帳號",width:"10%"},
+                      {field:"DEPARTMENT",title:"部門",width:"10%"},
+                      {field:"NAME",title:"姓名",width:"10%"},
+                      {field:"SIGN",title:"簽到狀況",width:"10%"},
+                     
+              ],
+              sortable:true,
+              scrollable: true,
+                            sortable: true,
+                            pageable: {
+                                input: true,
+                                numeric: false
+                            },
+      });
+    });
+   
+   
+    </script>
+    </main> 
+   
+</body>
+</html>
